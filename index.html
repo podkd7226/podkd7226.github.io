@@ -237,29 +237,60 @@
             color: #fff;
         }
 
-        /* ECG Decorative Line */
-        .ecg-line {
-            position: absolute;
-            right: 32px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 180px;
-            opacity: 0.08;
+        /* Hero layout */
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 48px;
+            align-items: center;
         }
-        .ecg-line svg {
+        .hero-text {
+            min-width: 0;
+        }
+        .hero-photo {
+            position: relative;
+        }
+        .hero-photo img {
             width: 100%;
-            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(13, 27, 42, 0.12);
+            object-fit: cover;
+            aspect-ratio: 3/4;
         }
-        .ecg-line path {
-            stroke: var(--navy);
-            stroke-width: 2;
-            fill: none;
-            stroke-dasharray: 800;
-            stroke-dashoffset: 800;
-            animation: drawECG 3s ease forwards 1s;
+        .hero-photo::after {
+            content: '';
+            position: absolute;
+            inset: 12px -12px -12px 12px;
+            border: 2px solid var(--teal);
+            border-radius: 20px;
+            opacity: 0.2;
+            z-index: -1;
         }
-        @keyframes drawECG {
-            to { stroke-dashoffset: 0; }
+
+        /* About photo */
+        .about-photo {
+            margin-bottom: 48px;
+            border-radius: 16px;
+            overflow: hidden;
+            max-height: 400px;
+            position: relative;
+        }
+        .about-photo img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: center 30%;
+            display: block;
+        }
+        .about-photo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(to top, var(--bg-warm), transparent);
+            pointer-events: none;
         }
 
         /* Scroll indicator */
@@ -823,8 +854,10 @@
            ═══════════════════════════════════════ */
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .hero { padding: 120px 24px 60px; min-height: 75vh; }
-            .ecg-line { display: none; }
+            .hero { padding: 120px 24px 60px; min-height: auto; }
+            .hero-content { grid-template-columns: 1fr; gap: 32px; }
+            .hero-photo { max-width: 260px; margin: 0 auto; }
+            .hero-photo::after { inset: 8px -8px -8px 8px; }
             .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 32px 16px; }
             .stat-divider { display: none; }
             section { padding: 60px 24px; }
@@ -864,32 +897,34 @@
 
     <!-- ═══════════ HERO ═══════════ -->
     <header class="hero">
-        <div class="ecg-line">
-            <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0,40 L30,40 L40,40 L50,20 L55,60 L60,10 L65,55 L70,35 L80,40 L120,40 L130,40 L140,20 L145,60 L150,10 L155,55 L160,35 L170,40 L200,40"/>
-            </svg>
-        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-label reveal">pulmonologist · ai researcher · founder</div>
 
-        <div class="hero-label reveal">pulmonologist · ai researcher · founder</div>
+                <h1 class="reveal reveal-d1">
+                    박형준<br>
+                    <em>Where Medicine<br>Meets AI</em>
+                </h1>
 
-        <h1 class="reveal reveal-d1">
-            박형준<br>
-            <em>Where Medicine<br>Meets AI</em>
-        </h1>
+                <p class="hero-subtitle reveal reveal-d2">
+                    <strong>호흡기내과 전문의</strong>이자 <strong>의료 AI 연구자</strong>.
+                    서울아산병원에서 임상과 인공지능 연구를 수행하고,
+                    현재 <strong>헬미닥</strong>을 통해 AI 의료 서비스의 미래를 만들어가고 있습니다.
+                </p>
 
-        <p class="hero-subtitle reveal reveal-d2">
-            <strong>호흡기내과 전문의</strong>이자 <strong>의료 AI 연구자</strong>.
-            서울아산병원에서 임상과 인공지능 연구를 수행하고,
-            현재 <strong>헬미닥</strong>을 통해 AI 의료 서비스의 미래를 만들어가고 있습니다.
-        </p>
+                <div class="hero-tags reveal reveal-d3">
+                    <span class="hero-tag accent">MD, PhD</span>
+                    <span class="hero-tag">Pulmonology</span>
+                    <span class="hero-tag">Medical AI</span>
+                    <span class="hero-tag">Deep Learning</span>
+                    <span class="hero-tag">NLP / LLM</span>
+                    <span class="hero-tag">CEO, HelpMeDoc</span>
+                </div>
+            </div>
 
-        <div class="hero-tags reveal reveal-d3">
-            <span class="hero-tag accent">MD, PhD</span>
-            <span class="hero-tag">Pulmonology</span>
-            <span class="hero-tag">Medical AI</span>
-            <span class="hero-tag">Deep Learning</span>
-            <span class="hero-tag">NLP / LLM</span>
-            <span class="hero-tag">CEO, HelpMeDoc</span>
+            <div class="hero-photo reveal reveal-d2">
+                <img src="profile-hero.jpg" alt="박형준 프로필">
+            </div>
         </div>
 
         <div class="scroll-hint reveal reveal-d5">
@@ -973,6 +1008,10 @@
         <div class="about-inner">
             <div class="section-label reveal">Background</div>
             <h2 class="section-title reveal reveal-d1">의사이자 개발자,<br>두 세계를 잇다</h2>
+
+            <div class="about-photo reveal reveal-d1">
+                <img src="profile-about.jpg" alt="박형준 강연">
+            </div>
 
             <div class="about-grid">
                 <!-- Timeline -->
