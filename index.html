@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>박형준 — Where Medicine Meets AI</title>
+    <meta name="description" content="Hyungjun Park, MD, PhD — Pulmonologist, Medical AI Researcher, CEO of HelpMeDoc">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════
+           CSS VARIABLES & RESET
+           ═══════════════════════════════════════ */
+        :root {
+            --navy:       #0D1B2A;
+            --deep-slate: #1B2A3D;
+            --teal:       #0A9396;
+            --teal-dim:   #0A939620;
+            --gold:       #C9A227;
+            --gold-dim:   #C9A22718;
+            --coral:      #AE4A34;
+            --coral-dim:  #AE4A3418;
+            --plum:       #6B4FA0;
+            --plum-dim:   #6B4FA018;
+            --text:       #1A1A2E;
+            --text-mid:   #4A4A5A;
+            --text-light: #7A7A8A;
+            --bg:         #FAFAF8;
+            --bg-warm:    #F3F1ED;
+            --bg-card:    #FFFFFF;
+            --border:     #E8E6E1;
+            --serif:      'Playfair Display', Georgia, 'Times New Roman', serif;
+            --sans:       'Source Sans 3', 'Helvetica Neue', sans-serif;
+            --mono:       'IBM Plex Mono', 'SF Mono', monospace;
+            --max-w:      980px;
+            --ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--sans);
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            font-weight: 400;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--teal);
+            color: #fff;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        /* ═══════════════════════════════════════
+           REVEAL ANIMATIONS
+           ═══════════════════════════════════════ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-d1 { transition-delay: 0.08s; }
+        .reveal-d2 { transition-delay: 0.16s; }
+        .reveal-d3 { transition-delay: 0.24s; }
+        .reveal-d4 { transition-delay: 0.32s; }
+        .reveal-d5 { transition-delay: 0.40s; }
+
+        /* ═══════════════════════════════════════
+           NAVIGATION
+           ═══════════════════════════════════════ */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(250, 250, 248, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        nav.scrolled {
+            border-bottom-color: var(--border);
+            box-shadow: 0 1px 12px rgba(0,0,0,0.04);
+        }
+        .nav-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 32px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-name {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--navy);
+        }
+        .nav-name span {
+            color: var(--teal);
+            margin-left: 4px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+        .nav-links a {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-mid);
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+        }
+        .nav-links a:hover {
+            color: var(--navy);
+            background: var(--bg-warm);
+        }
+
+        /* ═══════════════════════════════════════
+           HERO
+           ═══════════════════════════════════════ */
+        .hero {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 140px 32px 72px;
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-label {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hero-label::before {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 1px;
+            background: var(--teal);
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            line-height: 1.12;
+            letter-spacing: -0.03em;
+            color: var(--navy);
+            margin-bottom: 28px;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--teal);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-mid);
+            max-width: 560px;
+            margin-bottom: 40px;
+        }
+        .hero-subtitle strong {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .hero-tag {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.04em;
+            padding: 6px 16px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            color: var(--text-mid);
+            background: var(--bg-card);
+            transition: all 0.3s ease;
+        }
+        .hero-tag:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+        .hero-tag.accent {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: #fff;
+        }
+
+        /* ECG Decorative Line */
+        .ecg-line {
+            position: absolute;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 180px;
+            opacity: 0.08;
+        }
+        .ecg-line svg {
+            width: 100%;
+            height: auto;
+        }
+        .ecg-line path {
+            stroke: var(--navy);
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 800;
+            stroke-dashoffset: 800;
+            animation: drawECG 3s ease forwards 1s;
+        }
+        @keyframes drawECG {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Scroll indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: 32px;
+            left: 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+        .scroll-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--teal);
+            animation: pulse 2s ease infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        /* ═══════════════════════════════════════
+           STATS BAND
+           ═══════════════════════════════════════ */
+        .stats {
+            background: var(--navy);
+            padding: 56px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(10, 147, 150, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(107, 79, 160, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .stats-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            position: relative;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 500;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-number span {
+            font-family: var(--mono);
+            font-size: 0.5em;
+            color: var(--teal);
+            vertical-align: super;
+        }
+        .stat-label {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+        }
+        .stat-divider {
+            width: 1px;
+            background: rgba(255,255,255,0.08);
+            margin: -8px 0;
+        }
+
+        /* ═══════════════════════════════════════
+           SECTION COMMONS
+           ═══════════════════════════════════════ */
+        section {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 80px 32px;
+        }
+
+        .section-label {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 1px;
+            background: var(--teal);
+        }
+
+        .section-title {
+            font-family: var(--serif);
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            color: var(--navy);
+            margin-bottom: 48px;
+            line-height: 1.2;
+        }
+
+        /* ═══════════════════════════════════════
+           EXPERTISE CARDS
+           ═══════════════════════════════════════ */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .expertise-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s var(--ease);
+        }
+        .expertise-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+        .expertise-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+            border-color: transparent;
+        }
+
+        .expertise-card.clinical::before { background: var(--teal); }
+        .expertise-card.ai::before { background: var(--plum); }
+        .expertise-card.startup::before { background: var(--gold); }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        .clinical .card-icon { background: var(--teal-dim); color: var(--teal); }
+        .ai .card-icon { background: var(--plum-dim); color: var(--plum); }
+        .startup .card-icon { background: var(--gold-dim); color: var(--gold); }
+
+        .card-title {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .card-tags span {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.03em;
+            padding: 3px 10px;
+            border-radius: 4px;
+            background: var(--bg-warm);
+            color: var(--text-mid);
+        }
+
+        /* ═══════════════════════════════════════
+           ABOUT / TIMELINE
+           ═══════════════════════════════════════ */
+        .about-section {
+            background: var(--bg-warm);
+            border-radius: 0;
+            max-width: 100%;
+            padding: 80px 32px;
+        }
+        .about-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            margin-top: 48px;
+        }
+
+        .about-text {
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: var(--text-mid);
+        }
+        .about-text p + p {
+            margin-top: 20px;
+        }
+        .about-text strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Terminal */
+        .terminal {
+            background: var(--navy);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 16px 48px rgba(13, 27, 42, 0.18);
+            margin-top: 8px;
+        }
+        .terminal-bar {
+            background: var(--deep-slate);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .terminal-dot:nth-child(1) { background: #FF5F57; }
+        .terminal-dot:nth-child(2) { background: #FFBD2E; }
+        .terminal-dot:nth-child(3) { background: #28C840; }
+        .terminal-body {
+            padding: 24px;
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            line-height: 2;
+            color: rgba(255,255,255,0.55);
+        }
+        .terminal-body .cmd {
+            color: var(--teal);
+        }
+        .terminal-body .comment {
+            color: rgba(255,255,255,0.25);
+        }
+        .terminal-body .highlight {
+            color: #fff;
+        }
+        .terminal-body .gold {
+            color: var(--gold);
+        }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: var(--teal);
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .tl-item {
+            position: relative;
+            padding-bottom: 28px;
+        }
+        .tl-item:last-child {
+            padding-bottom: 0;
+        }
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 8px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            border: 2px solid var(--teal);
+            background: var(--bg-warm);
+        }
+        .tl-item.current::before {
+            background: var(--teal);
+            box-shadow: 0 0 0 4px var(--teal-dim);
+        }
+
+        .tl-year {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            color: var(--text-light);
+            margin-bottom: 2px;
+        }
+        .tl-role {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 2px;
+        }
+        .tl-place {
+            font-size: 0.88rem;
+            color: var(--text-mid);
+        }
+
+        /* ═══════════════════════════════════════
+           PUBLICATIONS
+           ═══════════════════════════════════════ */
+        .pub-list {
+            margin-top: 40px;
+        }
+
+        .pub-item {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 56px 1fr auto;
+            gap: 20px;
+            align-items: start;
+            transition: background 0.2s ease;
+        }
+        .pub-item:first-child {
+            border-top: 1px solid var(--border);
+        }
+        .pub-item:hover {
+            background: rgba(10, 147, 150, 0.02);
+        }
+
+        .pub-year {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text-light);
+            padding-top: 3px;
+        }
+
+        .pub-info {
+            min-width: 0;
+        }
+        .pub-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.5;
+            margin-bottom: 6px;
+        }
+        .pub-journal {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            color: var(--teal);
+            letter-spacing: 0.02em;
+        }
+        .pub-badge {
+            font-family: var(--mono);
+            font-size: 0.62rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+            white-space: nowrap;
+            align-self: center;
+        }
+        .pub-badge.first {
+            background: var(--teal-dim);
+            color: var(--teal);
+        }
+        .pub-badge.co {
+            background: var(--plum-dim);
+            color: var(--plum);
+        }
+        .pub-badge.corresponding {
+            background: var(--gold-dim);
+            color: var(--gold);
+        }
+
+        .pub-more {
+            text-align: center;
+            margin-top: 32px;
+        }
+        .pub-more a {
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            color: var(--text-mid);
+            padding: 10px 28px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            display: inline-block;
+        }
+        .pub-more a:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+            background: var(--teal-dim);
+        }
+
+        /* ═══════════════════════════════════════
+           LECTURES
+           ═══════════════════════════════════════ */
+        .lectures-section {
+            background: var(--bg-warm);
+            max-width: 100%;
+            padding: 80px 32px;
+        }
+        .lectures-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+        .lecture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 40px;
+        }
+        .lecture-category h4 {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+        .lecture-item {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            padding: 8px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+        .lecture-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--border);
+            transform: translateY(-50%);
+        }
+
+        /* ═══════════════════════════════════════
+           CONNECT / FOOTER
+           ═══════════════════════════════════════ */
+        .connect {
+            text-align: center;
+            padding: 100px 32px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+        .connect-title {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+        .connect-title em {
+            font-style: italic;
+            color: var(--teal);
+        }
+        .connect-sub {
+            font-size: 1.05rem;
+            color: var(--text-mid);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .connect-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .connect-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            letter-spacing: 0.03em;
+            padding: 12px 24px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: var(--bg-card);
+        }
+        .connect-link:hover {
+            border-color: var(--teal);
+            box-shadow: 0 4px 16px rgba(10, 147, 150, 0.1);
+            transform: translateY(-2px);
+        }
+        .connect-link svg {
+            width: 16px;
+            height: 16px;
+            opacity: 0.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px;
+            border-top: 1px solid var(--border);
+        }
+        footer p {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--text-light);
+            letter-spacing: 0.04em;
+        }
+
+        /* ═══════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero { padding: 120px 24px 60px; min-height: 75vh; }
+            .ecg-line { display: none; }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 32px 16px; }
+            .stat-divider { display: none; }
+            section { padding: 60px 24px; }
+            .expertise-grid { grid-template-columns: 1fr; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .about-section { padding: 60px 24px; }
+            .lecture-grid { grid-template-columns: 1fr; }
+            .lectures-section { padding: 60px 24px; }
+            .pub-item { grid-template-columns: 48px 1fr; }
+            .pub-badge { grid-column: 2; justify-self: start; margin-top: -4px; }
+            .connect { padding: 72px 24px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .stat-number { font-size: 1.8rem; }
+            .connect-links { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════ NAVIGATION ═══════════ -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="nav-name">H. Park<span>MD PhD</span></a>
+            <div class="nav-links">
+                <a href="#expertise">Expertise</a>
+                <a href="#about">About</a>
+                <a href="#publications">Papers</a>
+                <a href="#connect">Connect</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <header class="hero">
+        <div class="ecg-line">
+            <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,40 L30,40 L40,40 L50,20 L55,60 L60,10 L65,55 L70,35 L80,40 L120,40 L130,40 L140,20 L145,60 L150,10 L155,55 L160,35 L170,40 L200,40"/>
+            </svg>
+        </div>
+
+        <div class="hero-label reveal">pulmonologist · ai researcher · founder</div>
+
+        <h1 class="reveal reveal-d1">
+            박형준<br>
+            <em>Where Medicine<br>Meets AI</em>
+        </h1>
+
+        <p class="hero-subtitle reveal reveal-d2">
+            <strong>호흡기내과 전문의</strong>이자 <strong>의료 AI 연구자</strong>.
+            서울아산병원에서 임상과 인공지능 연구를 수행하고,
+            현재 <strong>헬미닥</strong>을 통해 AI 의료 서비스의 미래를 만들어가고 있습니다.
+        </p>
+
+        <div class="hero-tags reveal reveal-d3">
+            <span class="hero-tag accent">MD, PhD</span>
+            <span class="hero-tag">Pulmonology</span>
+            <span class="hero-tag">Medical AI</span>
+            <span class="hero-tag">Deep Learning</span>
+            <span class="hero-tag">NLP / LLM</span>
+            <span class="hero-tag">CEO, HelpMeDoc</span>
+        </div>
+
+        <div class="scroll-hint reveal reveal-d5">
+            <span class="scroll-dot"></span>
+            scroll to explore
+        </div>
+    </header>
+
+    <!-- ═══════════ STATS ═══════════ -->
+    <div class="stats">
+        <div class="stats-inner">
+            <div class="stat-item reveal">
+                <div class="stat-number">20<span>+</span></div>
+                <div class="stat-label">SCIE Publications</div>
+            </div>
+            <div class="stat-item reveal reveal-d1">
+                <div class="stat-number">12<span>yr</span></div>
+                <div class="stat-label">Clinical Experience</div>
+            </div>
+            <div class="stat-item reveal reveal-d2">
+                <div class="stat-number">30<span>+</span></div>
+                <div class="stat-label">Lectures & Talks</div>
+            </div>
+            <div class="stat-item reveal reveal-d3">
+                <div class="stat-number">1</div>
+                <div class="stat-label">AI Healthcare Startup</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ EXPERTISE ═══════════ -->
+    <section id="expertise">
+        <div class="section-label reveal">What I Do</div>
+        <h2 class="section-title reveal reveal-d1">임상, 연구, 그리고 사업의<br>교차점에 서다</h2>
+
+        <div class="expertise-grid">
+            <div class="expertise-card clinical reveal">
+                <div class="card-icon">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4.8 2.8h14.4v18.4H4.8z" rx="2"/><path d="M9 8h6M12 8v6M8 17h8"/></svg>
+                </div>
+                <div class="card-title">Clinical Medicine</div>
+                <p class="card-text">호흡기내과 전문의로서 폐질환, 중환자 의학, 감염병 진료를 수행합니다. 서울아산병원에서의 수련과 현재 화홍병원에서의 임상을 통해 환자 중심 의료를 실현합니다.</p>
+                <div class="card-tags">
+                    <span>Pulmonology</span>
+                    <span>Critical Care</span>
+                    <span>Infectious Disease</span>
+                </div>
+            </div>
+
+            <div class="expertise-card ai reveal reveal-d1">
+                <div class="card-icon">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </div>
+                <div class="card-title">Medical AI Research</div>
+                <p class="card-text">딥러닝과 자연어 처리를 활용한 의료 데이터 분석을 연구합니다. X-ray/CT 영상 분석, LLM 기반 진단 지원, 실시간 환자 상태 예측 등 20편 이상의 SCIE 논문을 발표했습니다.</p>
+                <div class="card-tags">
+                    <span>Deep Learning</span>
+                    <span>NLP / LLM</span>
+                    <span>Medical Imaging</span>
+                    <span>Prediction</span>
+                </div>
+            </div>
+
+            <div class="expertise-card startup reveal reveal-d2">
+                <div class="card-icon">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
+                <div class="card-title">HelpMeDoc 헬미닥</div>
+                <p class="card-text">LLM 기반 의료 AI 챗봇 서비스를 개발·운영합니다. 누구나 전문의 수준의 AI 주치의에게 증상을 문의하고 즉시 답변받을 수 있는 서비스를 만들고 있습니다.</p>
+                <div class="card-tags">
+                    <span>LLM Chatbot</span>
+                    <span>Symptom Analysis</span>
+                    <span>App Service</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ ABOUT ═══════════ -->
+    <div class="about-section" id="about">
+        <div class="about-inner">
+            <div class="section-label reveal">Background</div>
+            <h2 class="section-title reveal reveal-d1">의사이자 개발자,<br>두 세계를 잇다</h2>
+
+            <div class="about-grid">
+                <!-- Timeline -->
+                <div class="timeline reveal reveal-d2">
+                    <div class="tl-item current">
+                        <div class="tl-year">2025 — Present</div>
+                        <div class="tl-role">호흡기내과 과장</div>
+                        <div class="tl-place">화홍병원</div>
+                    </div>
+                    <div class="tl-item current">
+                        <div class="tl-year">2023 — Present</div>
+                        <div class="tl-role">대표이사 · CEO</div>
+                        <div class="tl-place">헬미닥 (HelpMeDoc)</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-year">2022 — 2023</div>
+                        <div class="tl-role">정보의학과 임상강사</div>
+                        <div class="tl-place">서울아산병원 · 울산대학교 의과대학</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-year">2020 — 2022</div>
+                        <div class="tl-role">호흡기내과 임상강사</div>
+                        <div class="tl-place">서울아산병원 · 울산대학교 의과대학</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-year">2021 — 2023</div>
+                        <div class="tl-role">이학 박사 (의료인공지능)</div>
+                        <div class="tl-place">울산대학교 의과대학 중개의학</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-year">2015 — 2017</div>
+                        <div class="tl-role">의학 석사</div>
+                        <div class="tl-place">울산대학교 의과대학</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-year">2013 — 2017</div>
+                        <div class="tl-role">내과 전공의</div>
+                        <div class="tl-place">서울아산병원</div>
+                    </div>
+                    <div class="tl-item">
+                        <div class="tl-year">2006 — 2012</div>
+                        <div class="tl-role">의학과</div>
+                        <div class="tl-place">인하대학교 의과대학</div>
+                    </div>
+                </div>
+
+                <!-- Terminal -->
+                <div>
+                    <div class="terminal reveal reveal-d3">
+                        <div class="terminal-bar">
+                            <div class="terminal-dot"></div>
+                            <div class="terminal-dot"></div>
+                            <div class="terminal-dot"></div>
+                        </div>
+                        <div class="terminal-body">
+                            <span class="comment"># career.sh</span><br>
+                            <span class="cmd">$</span> <span class="highlight">cat</span> research_interests.txt<br>
+                            <br>
+                            <span class="gold">Deep Learning</span><br>
+                            <span class="gold">Natural Language Processing</span><br>
+                            <span class="gold">Large Language Models</span><br>
+                            <span class="gold">Medical Image Analysis</span><br>
+                            <span class="gold">Real-time Clinical Prediction</span><br>
+                            <br>
+                            <span class="cmd">$</span> <span class="highlight">python3</span> helpmedoc.py --serve<br>
+                            <span class="comment"># Serving AI Doctor on port 443...</span><br>
+                            <span class="comment"># Patients connected: 10,000+</span><br>
+                            <br>
+                            <span class="cmd">$</span> <span class="cursor"></span>
+                        </div>
+                    </div>
+
+                    <div class="about-text reveal reveal-d4" style="margin-top: 32px;">
+                        <p>인하대학교 의과대학을 졸업하고 서울아산병원에서 내과 전공의 수련을 마쳤습니다. 이후 호흡기내과와 정보의학과에서 임상강사로 재직하며 <strong>임상 의학과 인공지능의 접점</strong>을 연구했습니다.</p>
+                        <p>울산대학교에서 <strong>의료인공지능</strong> 분야로 이학 박사학위를 취득했으며, 2023년 <strong>헬미닥</strong>을 설립하여 LLM 기반 의료 상담 AI 서비스를 개발·운영하고 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ PUBLICATIONS ═══════════ -->
+    <section id="publications">
+        <div class="section-label reveal">Research Output</div>
+        <h2 class="section-title reveal reveal-d1">Selected Publications</h2>
+
+        <div class="pub-list">
+            <div class="pub-item reveal">
+                <div class="pub-year">2024</div>
+                <div class="pub-info">
+                    <div class="pub-title">Comparing Large Language Model and Human Reader Accuracy with NEJM Image Challenge Case Image Inputs</div>
+                    <div class="pub-journal">Radiology</div>
+                </div>
+                <div class="pub-badge co">Co-author</div>
+            </div>
+
+            <div class="pub-item reveal">
+                <div class="pub-year">2024</div>
+                <div class="pub-info">
+                    <div class="pub-title">Extraction of clinical data on major pulmonary diseases from unstructured radiologic reports using a large language model</div>
+                    <div class="pub-journal">PLoS ONE</div>
+                </div>
+                <div class="pub-badge first">1st Author</div>
+            </div>
+
+            <div class="pub-item reveal">
+                <div class="pub-year">2024</div>
+                <div class="pub-info">
+                    <div class="pub-title">In-hospital real-time prediction of COVID-19 severity regardless of disease phase using electronic health records</div>
+                    <div class="pub-journal">PLoS ONE</div>
+                </div>
+                <div class="pub-badge first">1st Author</div>
+            </div>
+
+            <div class="pub-item reveal">
+                <div class="pub-year">2022</div>
+                <div class="pub-info">
+                    <div class="pub-title">Automated extraction of lung cancer staging from unstructured PET-CT reports: NLP with deep-learning</div>
+                    <div class="pub-journal">BMC Medical Informatics and Decision Making</div>
+                </div>
+                <div class="pub-badge first">1st Author</div>
+            </div>
+
+            <div class="pub-item reveal">
+                <div class="pub-year">2022</div>
+                <div class="pub-info">
+                    <div class="pub-title">Two-year efficacy of SNK01 plus pembrolizumab for non-small cell lung cancer: Expanded observations from a phase I/IIa RCT</div>
+                    <div class="pub-journal">Thoracic Cancer</div>
+                </div>
+                <div class="pub-badge first">1st Author</div>
+            </div>
+
+            <div class="pub-item reveal">
+                <div class="pub-year">2021</div>
+                <div class="pub-info">
+                    <div class="pub-title">An Attention Model With Transfer Embeddings to Classify Pneumonia-Related Bilingual Imaging Reports</div>
+                    <div class="pub-journal">JMIR Medical Informatics</div>
+                </div>
+                <div class="pub-badge first">1st Author</div>
+            </div>
+
+            <div class="pub-item reveal">
+                <div class="pub-year">2021</div>
+                <div class="pub-info">
+                    <div class="pub-title">Effect of Particulate Matter Reduction by Indoor Air Filter Use on Respiratory Symptoms and Lung Function: Systematic Review and Meta-analysis</div>
+                    <div class="pub-journal">Allergy, Asthma and Immunology Research</div>
+                </div>
+                <div class="pub-badge first">1st Author</div>
+            </div>
+
+            <div class="pub-item reveal">
+                <div class="pub-year">2020</div>
+                <div class="pub-info">
+                    <div class="pub-title">Detection of Bacteremia in Surgical In-Patients Using Recurrent Neural Network Based on Time Series Records</div>
+                    <div class="pub-journal">Journal of Medical Internet Research</div>
+                </div>
+                <div class="pub-badge first">1st Author</div>
+            </div>
+        </div>
+
+        <div class="pub-more reveal">
+            <a href="https://scholar.google.com/citations?user=PLACEHOLDER" target="_blank">View all 20+ publications →</a>
+        </div>
+    </section>
+
+    <!-- ═══════════ LECTURES ═══════════ -->
+    <div class="lectures-section" id="lectures">
+        <div class="lectures-inner">
+            <div class="section-label reveal">Speaking</div>
+            <h2 class="section-title reveal reveal-d1">강연 & 학회 발표</h2>
+
+            <div class="lecture-grid">
+                <div class="lecture-category reveal reveal-d2">
+                    <h4>학회 발표</h4>
+                    <div class="lecture-item">대한내과학회</div>
+                    <div class="lecture-item">대한인공의료지능학회</div>
+                    <div class="lecture-item">대한초음파학회</div>
+                    <div class="lecture-item">전자공학회</div>
+                    <div class="lecture-item">NECA 한국보건의료연구원</div>
+                    <div class="lecture-item">의료메타버스학회</div>
+                    <div class="lecture-item">임상디지털학회</div>
+                    <div class="lecture-item">대한내분비학회 외 다수</div>
+                </div>
+
+                <div class="lecture-category reveal reveal-d3">
+                    <h4>대학 · 병원 · 기업 강의</h4>
+                    <div class="lecture-item">건양대학교 · 건국대학교</div>
+                    <div class="lecture-item">분당서울대병원</div>
+                    <div class="lecture-item">가톨릭대학교</div>
+                    <div class="lecture-item">삼성서울병원</div>
+                    <div class="lecture-item">서울아산병원</div>
+                    <div class="lecture-item">패스트캠퍼스 — 바이브코딩</div>
+                    <div class="lecture-item">식약처 · AIfrenz</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ CONNECT ═══════════ -->
+    <section id="connect" class="connect">
+        <div class="section-label reveal" style="justify-content: center;">Get in Touch</div>
+        <h2 class="connect-title reveal reveal-d1">Let's <em>Connect</em></h2>
+        <p class="connect-sub reveal reveal-d2">의료 AI, 공동 연구, 강연 의뢰 등 편하게 연락주세요.</p>
+
+        <div class="connect-links reveal reveal-d3">
+            <a href="mailto:podkd@naver.com" class="connect-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
+                podkd@naver.com
+            </a>
+            <a href="https://www.hmdoc.kr" target="_blank" class="connect-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                hmdoc.kr
+            </a>
+            <a href="https://github.com/podkd7226" target="_blank" class="connect-link">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+            </a>
+        </div>
+    </section>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer>
+        <p>&copy; 2025 Hyungjun Park. Built with precision.</p>
+    </footer>
+
+    <!-- ═══════════ JAVASCRIPT ═══════════ -->
+    <script>
+        // Scroll reveal via IntersectionObserver
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.08,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Navbar scroll effect
+        const nav = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            if (scrollY > 40) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+            lastScroll = scrollY;
+        }, { passive: true });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const pos = target.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top: pos, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
